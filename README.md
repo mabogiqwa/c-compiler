@@ -1,2 +1,25 @@
 # c-compiler
-Building a mechanism that can speak the language(machine code) of the CPU
+Building a mechanism that can speak the language(machine code) of the CPU.
+
+## Preprocessing
+This component will handle include declarations, macros, and conditional compilations.
+
+## Lexical Analysis
+Turns characters into tokens. Token types include identifiers, numbers, operators, and symbols.
+
+## Parser
+Turns tokens into an abstract syntax tree.
+
+## Semantic Analysis
+Going to involve symbol tales and with checking whether rules are enforced.
+
+## Intermediate Representation
+Turns abstract syntax trees into a simpler, lower-level form. We could use a 3-address code. This helps simplify optimization and code generation. Also decouples frontend and backend.
+
+## Optimization (Optional)
+
+## Code generation
+The goal is that the intermediate representation is turned into 32-but machine code or assembly. This will require a stack frame layout, register usage and how expressions map to instructions.
+
+## Linking
+Provides a form of runtime support.
