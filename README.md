@@ -19,8 +19,6 @@ Going to involve symbol tales and with checking whether rules are enforced.
 ## Intermediate Representation
 Turns abstract syntax trees into a simpler, lower-level form. We could use a 3-address code. This helps simplify optimization and code generation. Also decouples frontend and backend.
 
-## Optimization (Optional)
-
 ## Code generation
 The goal is that the intermediate representation is turned into 32-bit machine code or assembly. This will require a stack frame layout, register usage and how expressions map to instructions.
 
