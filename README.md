@@ -14,7 +14,7 @@ Turns characters into tokens. Token types include identifiers, numbers, operator
 Turns tokens into an abstract syntax tree.
 
 ## Semantic Analysis
-Going to involve symbol tales and with checking whether rules are enforced.
+Going to involve symbol tables and with checking whether rules are enforced.
 
 ## Intermediate Representation
 Turns abstract syntax trees into a simpler, lower-level form. We could use a 3-address code. This helps simplify optimization and code generation. Also decouples frontend and backend.
