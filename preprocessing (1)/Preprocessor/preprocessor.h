@@ -64,12 +64,26 @@ inline void Preprocessor::handle_directive(const std::vector<Token> &tokens, siz
 
 inline void Preprocessor::handle_define(const std::vector<Token> &tokens, size_t &index)
 {
+    index++;
 
+    if (tokens[index].type != TokenType::IDENTIFIER)
+        throw std::runtime_error("Expected an identifier after #define");
+
+    std::string name = tokens[index].value;
+    index++;
+
+    std::vector<Token> replacement;
+
+    while (tokens[index].type != TokenType::NEWLINE && tokens[index].type != TokenType::END_OF_FILE) {
+        replacement.push_back(tokens[index]);
+        index++;
+    }
+
+    macros[name] = replacement;
 }
 
 inline void Preprocessor::handle_ifndef(const std::vector<Token> &tokens, size_t &index, bool negated)
 {
-
 }
 
 inline void Preprocessor::handle_endif()
