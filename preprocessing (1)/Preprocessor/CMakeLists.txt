@@ -15,6 +15,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core)
 add_executable(Preprocessor
     preprocessor.h
     tokens.h
+    main.cpp
 )
 target_link_libraries(Preprocessor Qt${QT_VERSION_MAJOR}::Core)
 
