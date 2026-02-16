@@ -84,11 +84,23 @@ inline void Preprocessor::handle_define(const std::vector<Token> &tokens, size_t
 
 inline void Preprocessor::handle_ifndef(const std::vector<Token> &tokens, size_t &index, bool negated)
 {
+    index++;
+
+    if (tokens[index].type != TokenType::IDENTIFIER)
+        throw std::runtime_error("Expected identifier after #ifndef");
+
+    bool defined = macros.count(tokens[index].value);
+    bool result = negated ? !defined : defined;
+
+    conditionalStack.push(result);
 }
 
 inline void Preprocessor::handle_endif()
 {
-
+    if (conditionalStack.empty()) {
+        throw std::runtime_error("Unmatched #endif");
+    }
+    conditionalStack.pop();
 }
 
 inline void Preprocessor::handle_include(const std::vector<Token> &tokens, size_t &index, std::vector<Token> &output)
@@ -98,7 +110,11 @@ inline void Preprocessor::handle_include(const std::vector<Token> &tokens, size_
 
 inline void Preprocessor::expand_macro(const Token &token, std::vector<Token> &output)
 {
+    const auto& replacement = macros[token.value];
 
+    for (const auto& t : replacement) {
+        output.push_back(t);
+    }
 }
 
 inline bool Preprocessor::isActive() const
