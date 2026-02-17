@@ -1,5 +1,5 @@
 # c-compiler
-Building a mechanism that can speak the language(machine code) of the CPU.
+Building a mechanism that can translate C into machine code.
 
 ## Design decisions
 The compiler will be 32-bit, little-endian with a flat memory model. It will process identifiers such as conditionals, loops, functions, and integers for now.
