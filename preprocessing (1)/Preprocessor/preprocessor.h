@@ -10,7 +10,7 @@
 class Preprocessor {
 public:
     std::vector<Token> process(const std::vector<Token>& tokens);
-    //Postcondition: Processes tokens to handle preprocessor directive such as #define, #include, etc
+    //Postcondition: Processes tokens to handle preprocessor directives such as #define, #include, etc
     //and also expand macros.
     //It iterates through tokens and when it finds # at the beginning of a line, it called handle_directive()
 private:
@@ -123,6 +123,11 @@ inline void Preprocessor::handle_include(const std::vector<Token> &tokens, size_
     std::ifstream file(filename); //reads file and tokenises it
     if (!file.is_open())
         throw std::runtime_error("Cannot open file: " + filename);
+
+    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    file.close();
+
+    T
 }
 
 inline void Preprocessor::expand_macro(const Token &token, std::vector<Token> &output)
