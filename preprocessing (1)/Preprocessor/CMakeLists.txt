@@ -16,7 +16,7 @@ add_executable(Preprocessor
     preprocessor.h
     tokens.h
     main.cpp
-    Tokenizer.h
+    tokenizer.h
 )
 target_link_libraries(Preprocessor Qt${QT_VERSION_MAJOR}::Core)
 
