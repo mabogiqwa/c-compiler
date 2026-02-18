@@ -21,6 +21,8 @@ private:
     void handle_define(const std::vector<Token>& tokens, size_t& index);
 
     void handle_ifndef(const std::vector<Token>& tokens, size_t& index, bool negated);
+    //Postcondition: index is incremented by 1. If the negated is false then the value indicates that the identifier exists in the macros map.
+    //If the negated is true then the value indicates that the identifier does not exist in the macros map.
 
     void handle_endif();
 
@@ -86,13 +88,13 @@ inline void Preprocessor::handle_ifndef(const std::vector<Token> &tokens, size_t
 {
     index++;
 
-    if (tokens[index].type != TokenType::IDENTIFIER)
+    if (tokens[index].type != TokenType::IDENTIFIER) //checks if the current index pos is not an identifier type and stops execution
         throw std::runtime_error("Expected identifier after #ifndef");
 
-    bool defined = macros.count(tokens[index].value);
-    bool result = negated ? !defined : defined;
+    bool defined = macros.count(tokens[index].value); //checks if the macro name exists in the macros map. count() returns 1 if the macro is found and 0 if it isn't.
+    bool result = negated ? !defined : defined; //ternary operator to decide what boolean value is stored
 
-    conditionalStack.push(result);
+    conditionalStack.push(result); //Adds boolean result onto the conditionalStack.
 }
 
 inline void Preprocessor::handle_endif()
