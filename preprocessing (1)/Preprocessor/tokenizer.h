@@ -20,7 +20,7 @@ private:
 
 inline Tokenizer::Tokenizer(const std::string &input)
 {
-
+    std::vector<Token> tokens;
 }
 
 inline std::vector<Token> Tokenizer::tokenize()
