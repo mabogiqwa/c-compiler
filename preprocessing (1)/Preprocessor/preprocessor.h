@@ -19,6 +19,8 @@ private:
     void handle_directive(const std::vector<Token>& tokens, size_t& index, std::vector<Token>& output);
 
     void handle_define(const std::vector<Token>& tokens, size_t& index);
+    //Postcondition: The macro name define and it's replacement tokens are extracted from the token stream and stored in the macros
+    //map. The index is moved to the end of the macro definition.
 
     void handle_ifndef(const std::vector<Token>& tokens, size_t& index, bool negated);
     //Postcondition: index is incremented by 1. If the negated is false then the value indicates that the identifier exists in the macros map.
