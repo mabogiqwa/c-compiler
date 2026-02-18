@@ -25,10 +25,12 @@ private:
     //If the negated is true then the value indicates that the identifier does not exist in the macros map.
 
     void handle_endif();
+    //Postcondition: The top element from conditionalStack is removed
 
     void handle_include(const std::vector<Token>& tokens, size_t& index, std::vector<Token>& output);
 
     void expand_macro(const Token& token, std::vector<Token>& output);
+    //Postcondition: Takes a macro name and replaces it with allthe tokens that were defined for that macro, adding those tokens to the output vector.
 
     bool isActive() const;
     //Postcondition: Determines if code should be compiled or skipped based on directives such as #ifndef,
