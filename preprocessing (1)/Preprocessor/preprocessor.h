@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 #include <stack>
+#include <fstream>
 #include <stdexcept>
 #include "tokens.h"
 
@@ -111,7 +112,17 @@ inline void Preprocessor::handle_endif()
 
 inline void Preprocessor::handle_include(const std::vector<Token> &tokens, size_t &index, std::vector<Token> &output)
 {
+    index++;
 
+    if (tokens[index].type != TokenType::STRING)
+        throw std::runtime_error("Expected filename after #include");
+
+    std::string filename = tokens[index].value;
+    index++;
+
+    std::ifstream file(filename); //reads file and tokenises it
+    if (!file.is_open())
+        throw std::runtime_error("Cannot open file: " + filename);
 }
 
 inline void Preprocessor::expand_macro(const Token &token, std::vector<Token> &output)
