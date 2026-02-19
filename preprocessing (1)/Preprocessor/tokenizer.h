@@ -1,6 +1,8 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 #include "tokens.h"
+#include <cctype>
+#include <vector>
 
 //created to tokenize a file's content into tokens
 class Tokenizer {
@@ -14,7 +16,6 @@ private:
     Token next_token();
     bool is_at_end() const;
     char current() const;
-    bool is_space() const;
     char peek() const;
     void advance();
 };
@@ -55,14 +56,14 @@ inline std::vector<Token> Tokenizer::tokenize()
 
 inline void Tokenizer::skip_whitespace()
 {
-    while (!is_at_end() && std::is_space(current()) && current() != '\n') {
+    while (!is_at_end() && std::isspace(current()) && current() != '\n') {
         advance();
     }
 }
 
 inline Token Tokenizer::next_token()
 {
-    while (!isAtEnd() && std::is_space(current()) && current() != '\n') {
+    while (!isAtEnd() && std::isspace(current()) && current() != '\n') {
         advance();
     }
 }
@@ -75,11 +76,6 @@ inline bool Tokenizer::is_at_end() const
 inline char Tokenizer::current() const
 {
     return is_at_end() ? '\0' : input[position];
-}
-
-inline bool Tokenizer::is_space() const
-{
-
 }
 
 inline char Tokenizer::peek() const
