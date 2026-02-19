@@ -10,9 +10,9 @@ public:
 private:
     std::string input;
     size_t position;
-    void skipWhitespace();
-    Token nextToken();
-    bool isAtEnd() const;
+    void skip_whitespace();
+    Token next_token();
+    bool is_at_end() const;
     char current() const;
     char peek() const;
     void advance();
@@ -37,22 +37,34 @@ inline Tokenizer::Tokenizer(const std::string &input)
 
 inline std::vector<Token> Tokenizer::tokenize()
 {
+    std::vector<Token> tokens;
 
+    while (!isAtEnd()) {
+        skipWhitespace();
+
+        if (isAtEnd())
+            break;
+
+        tokens.push_back(nextToken());
+    }
+
+    tokens.push_back(Token{TokenType::END_OF_FILE, ""});
+    return tokens;
 }
 
-inline void Tokenizer::skipWhitespace()
+inline void Tokenizer::skip_whitespace()
 {
 
 }
 
-inline Token Tokenizer::nextToken()
+inline Token Tokenizer::next_token()
 {
     while (!isAtEnd() && std::isspace(current()) && current() != '\n') {
         advance();
     }
 }
 
-inline bool Tokenizer::isAtEnd() const
+inline bool Tokenizer::is_at_end() const
 {
     return position >= input.length();
 }
