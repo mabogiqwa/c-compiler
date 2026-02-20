@@ -67,6 +67,28 @@ inline Token Tokenizer::next_token()
             advance();
         return Token{TokenType::STRING, value};
     }
+
+    if (std::isalpha(current()) || current() == '_') {
+        std::string value;
+        while (!is_at_end() && (std::isalnum(current()) || current() == '_')) {
+            value += current();
+            advance();
+        }
+        return Token{TokenType::IDENTIFIER, value};
+    }
+
+    if (std::isdigit(current())) {
+        std::string value;
+        while (!is_at_end() && std::isdigit(current())) {
+            value += current();
+            advance();
+        }
+        return Token{TokenType::NUMBER, value};
+    }
+
+    char ch = current();
+    advance();
+    return Token{TokenType::SYMBOL, std::string(1, ch)};
 }
 
 inline bool Tokenizer::is_at_end() const

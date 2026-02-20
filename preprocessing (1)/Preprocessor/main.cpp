@@ -28,7 +28,7 @@ void test_preprocessor() {
 }
 
 int main(int argc, char *argv[]) {
-    QCoreApplicaation app(argc, argv);
+    QCoreApplication app(argc, argv);
 
     test_preprocessor();
 

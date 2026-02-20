@@ -53,17 +53,19 @@ inline std::vector<Token> Preprocessor::process(const std::vector<Token> &tokens
             handle_directive(tokens, i, output);
             continue;
         }
+
+        if (!isActive()) {
+            continue;
+        }
+
+        if (tok.type == TokenType::IDENTIFIER && macros.count(tok.value)) {
+            expand_macro(tok, output);
+        } else {
+            output.push_back(tok);
+        }
     }
 
-    if (!isActive()) {
-        continue;
-    }
-
-    if (tok.type == TokenType::IDENTIFIER && macros.count(tok.value)) {
-        expand_macro(tok, output);
-    } else {
-        output.push_back(tok);
-    }
+    return output;
 }
 
 inline void Preprocessor::handle_directive(const std::vector<Token> &tokens, size_t &index, std::vector<Token> &output)
