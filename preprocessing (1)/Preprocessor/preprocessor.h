@@ -19,6 +19,7 @@ private:
     std::stack<bool> conditionalStack;
 
     void handle_directive(const std::vector<Token>& tokens, size_t& index, std::vector<Token>& output);
+    //Postcondition: Determines whether the directive following the # is either define, ifndef, ifdef, endif, or include
 
     void handle_define(const std::vector<Token>& tokens, size_t& index);
     //Postcondition: The macro name define and it's replacement tokens are extracted from the token stream and stored in the macros
@@ -67,7 +68,38 @@ inline std::vector<Token> Preprocessor::process(const std::vector<Token> &tokens
 
 inline void Preprocessor::handle_directive(const std::vector<Token> &tokens, size_t &index, std::vector<Token> &output)
 {
+    index++; //skips the # token
 
+    if (index >= tokens.size() || tokens[index].type != TokenType::IDENTIFIER)
+        throw std::runtime_error("Expected directive name after #");
+
+    std::string directive = tokens[index].value;
+
+    if (directive == "define") {
+        handle_define(tokens, index);
+    }
+    else if (directive == "ifndef") {
+        handle_ifndef(tokens, index, true);
+    }
+    else if (directive == "ifdef") {
+        handle_ifndef(tokens, index, false);
+    }
+    else if (directive == "endif") {
+        handle_endif();
+    }
+    else if (directive == "include") {
+        handle_include(tokens, index, output);
+    }
+    else if (directive == "else") {
+        if (conditionalStack.empty())
+            throw std::runtime_error("Unmatched else");
+        bool top = conditionalStack.top();
+        conditionalStack.pop();
+        conditionalStack.push(!top);
+    }
+    else {
+        throw std::runtime_error("Unknown directive");
+    }
 }
 
 inline void Preprocessor::handle_define(const std::vector<Token> &tokens, size_t &index)
@@ -129,6 +161,13 @@ inline void Preprocessor::handle_include(const std::vector<Token> &tokens, size_
     file.close();
 
     Tokenizer tokenizer(content);
+    std::vector<Token> includedTokens= tokenizer.tokenize();
+
+    std::vector<Token> processedTokens = process(includedTokens);
+
+    for (const auto& t: processedTokens) {
+        output.push_back(t);
+    }
 }
 
 inline void Preprocessor::expand_macro(const Token &token, std::vector<Token> &output)
