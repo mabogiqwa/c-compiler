@@ -46,8 +46,26 @@ inline void Tokenizer::skip_whitespace()
 
 inline Token Tokenizer::next_token()
 {
-    while (!is_at_end() && std::isspace(current()) && current() != '\n') {
+    if (current() == '\n') { //checks if the current character is a newline. if it is it returns a token with val \n
         advance();
+        return Token{TokenType::NEWLINE, "\n"};
+    }
+
+    if (current() == '#') { //checks if the current character is a hash. if it is it returns a token with val #
+        advance();
+        return Token{TokenType::HASH, "#"};
+    }
+
+    if (current() == '"') {
+        advance();
+        std::string value;
+        while (!is_at_end() && current() != '"') {
+            value += current();
+            advance();
+        }
+        if (!is_at_end())
+            advance();
+        return Token{TokenType::STRING, value};
     }
 }
 
