@@ -60,7 +60,7 @@ inline std::vector<Token> Preprocessor::process(const std::vector<Token> &tokens
     }
 
     if (tok.type == TokenType::IDENTIFIER && macros.count(tok.value)) {
-        expandMacro(tok, output);
+        expand_macro(tok, output);
     } else {
         output.push_back(tok);
     }

@@ -7,7 +7,7 @@
 //created to tokenize a file's content into tokens
 class Tokenizer {
 public:
-    Tokenizer(const std::string& input);
+    Tokenizer(const std::string& input) : input(input), position(0) {}
     std::vector<Token> tokenize();
 private:
     std::string input;
@@ -20,34 +20,17 @@ private:
     void advance();
 };
 
-inline Tokenizer::Tokenizer(const std::string &input)
-{
-    std::vector<Token> tokens;
-
-    while (!isAtEnd()) {
-        skipWhitespace();
-
-        if (isAtEnd())
-            break;
-
-        tokens.push_back(nextToken());
-    }
-
-    tokens.push_back(Token{TokenType::END_OF_FILE, ""});
-    return tokens;
-}
-
 inline std::vector<Token> Tokenizer::tokenize()
 {
     std::vector<Token> tokens;
 
-    while (!isAtEnd()) {
-        skipWhitespace();
+    while (!is_at_end()) {
+        skip_whitespace();
 
-        if (isAtEnd())
+        if (is_at_end())
             break;
 
-        tokens.push_back(nextToken());
+        tokens.push_back(next_token());
     }
 
     tokens.push_back(Token{TokenType::END_OF_FILE, ""});
@@ -63,7 +46,7 @@ inline void Tokenizer::skip_whitespace()
 
 inline Token Tokenizer::next_token()
 {
-    while (!isAtEnd() && std::isspace(current()) && current() != '\n') {
+    while (!is_at_end() && std::isspace(current()) && current() != '\n') {
         advance();
     }
 }
