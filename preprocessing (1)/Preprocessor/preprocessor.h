@@ -6,6 +6,7 @@
 #include <fstream>
 #include <stdexcept>
 #include "tokens.h"
+#include "tokenizer.h"
 
 class Preprocessor {
 public:
@@ -127,7 +128,7 @@ inline void Preprocessor::handle_include(const std::vector<Token> &tokens, size_
     std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     file.close();
 
-    T
+    Tokenizer tokenizer(content);
 }
 
 inline void Preprocessor::expand_macro(const Token &token, std::vector<Token> &output)
