@@ -25,6 +25,25 @@ void test_preprocessor() {
         << "Type:" << static_cast<int>(tok.type);
     }
     qDebug() << "\n";
+
+    qDebug() << "Test 2";
+    std::vector<Token> tokens = {
+        {TokenType::HASH, "#"}, //this
+        {TokenType::IDENTIFIER, "ifndef"}, //this
+        {TokenType::IDENTIFIER, "DEBUG"},
+        {TokenType::NEWLINE, "\n"}, //this
+        {TokenType::IDENTIFIER, "include_this"},
+        {TokenType::NEWLINE, "\n"},
+        {TokenType::HASH, "#"},
+        {TokenType::IDENTIFIER, "endif"}, //this
+        {TokenType::NEWLINE, "\n"},
+        {TokenType::END_OF_FILE, ""}
+    };
+
+    auto result = prep.process(tokens);
+
+    qDebug() << "Input tokens:" << tokens.size();
+    qDebug() << "Output tokens:" << result.size(); //i get 5 tokens (bug)
 }
 
 int main(int argc, char *argv[]) {
