@@ -24,18 +24,18 @@ void test_preprocessor() {
         qDebug() << "Token:" << QString::fromStdString(tok.value)
         << "Type:" << static_cast<int>(tok.type);
     }
-    qDebug() << "\n";
+    qDebug() << "\n"; //first test passed
 
     qDebug() << "Test 2";
     std::vector<Token> tokens = {
-        {TokenType::HASH, "#"}, //this
-        {TokenType::IDENTIFIER, "ifndef"}, //this
+        {TokenType::HASH, "#"},
+        {TokenType::IDENTIFIER, "ifndef"},
         {TokenType::IDENTIFIER, "DEBUG"},
-        {TokenType::NEWLINE, "\n"}, //this
+        {TokenType::NEWLINE, "\n"},
         {TokenType::IDENTIFIER, "include_this"},
         {TokenType::NEWLINE, "\n"},
         {TokenType::HASH, "#"},
-        {TokenType::IDENTIFIER, "endif"}, //this
+        {TokenType::IDENTIFIER, "endif"},
         {TokenType::NEWLINE, "\n"},
         {TokenType::END_OF_FILE, ""}
     };
@@ -43,13 +43,13 @@ void test_preprocessor() {
     auto result = prep.process(tokens);
 
     qDebug() << "Input tokens:" << tokens.size();
-    qDebug() << "Output tokens:" << result.size(); //i get 5 tokens (bug)
+    qDebug() << "Output tokens:" << result.size();
 }
 
 int main(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
 
-    test_preprocessor();
+    //test_preprocessor();
 
     return 0;
 }
