@@ -49,7 +49,7 @@ void test_preprocessor() {
 int main(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
 
-    //test_preprocessor();
+    test_preprocessor();
 
     return 0;
 }
